@@ -9,3 +9,7 @@
   cursor: pointer;
   height: 50px;
 }
+
+.list-group-item:active {
+  opacity: 0.5;
+}
