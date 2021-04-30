@@ -1,0 +1,132 @@
+app angular PIANO
+
+creamos carpeta en escritorio
+cd y ruta de la carpeta
+ng new Piano
+
+en src/assets agregamos una nueva carpeta sonidos y ponemos los sonidos que queremos para el piano
+
+agregamos boostrap a nuestro proyecto:
+
+https://getbootstrap.com/docs/5.0/getting-started/introduction/
+CSS
+Copy-paste the stylesheet <link> into your <head> before all other stylesheets to load our CSS.
+copiamos el enlace y lo metemos en el head de index.html
+
+Para hacer el piano vamos a agregar la clase:
+https://getbootstrap.com/docs/5.0/components/list-group/
+app.component.html
+
+<div class="list-group">
+  <a href="#" class="list-group-item list-group-item-action">A simple default list group item</a>
+
+  <a href="#" class="list-group-item list-group-item-action list-group-item-primary">A simple primary list group item</a>
+  <a href="#" class="list-group-item list-group-item-action list-group-item-secondary">A simple secondary list group item</a>
+  <a href="#" class="list-group-item list-group-item-action list-group-item-success">A simple success list group item</a>
+  <a href="#" class="list-group-item list-group-item-action list-group-item-danger">A simple danger list group item</a>
+  <a href="#" class="list-group-item list-group-item-action list-group-item-warning">A simple warning list group item</a>
+  <a href="#" class="list-group-item list-group-item-action list-group-item-info">A simple info list group item</a>
+  <a href="#" class="list-group-item list-group-item-action list-group-item-light">A simple light list group item</a>
+  <a href="#" class="list-group-item list-group-item-action list-group-item-dark">A simple dark list group item</a>
+</div>
+
+Para saber si funcionan bien los audios buscamos en google, html audio:
+
+https://www.w3schools.com/html/html5_audio.asp
+
+copiamos el ejemplo para ver si funciona correctamente
+
+<audio controls>
+  <source src="horse.ogg" type="audio/ogg">
+  <source src="horse.mp3" type="audio/mpeg">
+Your browser does not support the audio element.
+</audio>
+
+Para crear el piano:
+
+<div class="row">
+  <div class="col-lg-4">
+    <div class="list-group">
+      <a class="list-group-item list-group-item-action" style="background-color: red;"></a>
+      <a class="list-group-item list-group-item-action" style="background-color: orange;"></a>
+      <a class="list-group-item list-group-item-action" style="background-color: yellow;"></a>
+      <a class="list-group-item list-group-item-action" style="background-color: green;"></a>
+      <a class="list-group-item list-group-item-action" style="background-color: teal"></a>
+      <a class="list-group-item list-group-item-action" style="background-color: blue;"></a>
+      <a class="list-group-item list-group-item-action" style="background-color: purple;"></a>
+    </div>
+  </div>
+</div>
+
+Estilo piano:
+
+.row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.list-group-item {
+  cursor: pointer;
+  height: 50px;
+}
+
+Ahora vamos a establecer las notas para cada tecla:
+
+src\app\app.component.html
+
+<div class="row">
+  <div class="col-lg-4">
+    <div class="list-group">
+      <a (click)="aplicarSonido(1)" class="list-group-item list-group-item-action" style="background-color: red;"></a>
+      <a (click)="aplicarSonido(2)"class="list-group-item list-group-item-action" style="background-color: orange;"></a>
+      <a (click)="aplicarSonido(3)"class="list-group-item list-group-item-action" style="background-color: yellow;"></a>
+      <a (click)="aplicarSonido(4)"class="list-group-item list-group-item-action" style="background-color: green;"></a>
+      <a (click)="aplicarSonido(5)"class="list-group-item list-group-item-action" style="background-color: teal"></a>
+      <a (click)="aplicarSonido(6)"class="list-group-item list-group-item-action" style="background-color: blue;"></a>
+      <a (click)="aplicarSonido(7)"class="list-group-item list-group-item-action" style="background-color: purple;"></a>
+    </div>
+  </div>
+</div>
+
+y tenemos que declara el metodo aplicarSonido del evento click en:
+
+src\app\app.component.ts
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  title = 'Piano';
+
+  /* metodo aplicarSonido */
+  aplicarSonido(numero: number): void{
+    const audio = new Audio();
+    /* ruta relativa para que coja el numero de nota segun la tecla */
+    audio.src='../assets/sonidos/note' + numero + '.wav';
+    /* que cargue el audio */
+    audio.load();
+    /* que ejecute el audio */
+    audio.play();
+  }
+}
+
+Ahora vamos a pasarlo a producción (Deploy a Netifly)
+ng build --prod
+
+Esto nos creara una carpeta dist
+
+en https://app.netlify.com/teams/miryambathilde/sites
+cogemos y arrastamos la carpeta piano que hay dentro de la carpeta dist
+
+https://app-piano-angular11.netlify.app
+
+CUANDO DESCARGAMOS UN PROYECTO para tener el node_modules lo primero que hay que hacer es:
+
+npm install
+ng serve o code.(para abrir el vsc)
